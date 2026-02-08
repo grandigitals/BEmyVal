@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine? 💘</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Poppins:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* 
+         *  CUSTOMIZATION SECTION
+         *  You can easily change colors, fonts, and images here.
+         */
+        :root {
+            --bg-color: #fce4ec;
+            /* Light pink background */
+            --bg-secondary: #f8bbd0;
+            /* Slightly darker pink for accents */
+            --text-color: #880e4f;
+            /* Dark reddish-pink for text */
+            --btn-yes-bg: #e91e63;
+            /* Pink button */
+            --btn-yes-hover: #c2185b;
+            --btn-no-bg: #9e9e9e;
+            /* Grey button initial */
+            --btn-no-hover: #757575;
+            --font-main: 'Poppins', sans-serif;
+            --font-handwriting: 'Indie Flower', cursive;
+        }
+
+        /* RESET & BASE STYLES */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            /* Prevent scrolling when button moves */
+            position: relative;
+        }
+
+        /* CONTAINER */
+        .container {
+            text-align: center;
+            padding: 20px;
+            max-width: 600px;
+            width: 100%;
+            z-index: 10;
+        }
+
+        /* SCREENS (Landing & Celebration) */
+        .screen {
+            transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            padding: 20px;
+        }
+
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
+            visibility: hidden;
+            transform: translate(-50%, -40%);
+            /* Slightly offset for fade-up effect */
+        }
+
+        /* TYPOGRAPHY */
+        h1 {
+            font-family: var(--font-handwriting);
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            color: #d81b60;
+            text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.5);
+        }
+
+        p.subtext {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        /* BUTTONS */
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 2rem;
+            position: relative;
+            /* For absolute positioning of No button within container if needed, but we use fixed for better evasion */
+            min-height: 60px;
+            /* Keep space for buttons */
+        }
+
+        button {
+            font-family: var(--font-main);
+            font-size: 1.1rem;
+            padding: 12px 32px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            font-weight: 600;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        #btn-yes {
+            background-color: var(--btn-yes-bg);
+            color: white;
+        }
+
+        #btn-yes:hover {
+            background-color: var(--btn-yes-hover);
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(233, 30, 99, 0.3);
+        }
+
+        #btn-no {
+            background-color: white;
+            color: #555;
+            border: 2px solid #ddd;
+            /* We will use absolute positioning for evasion logic */
+            transition: all 0.3s ease;
+            /* Smooth transition for color/text, but position logic is instant or custom */
+        }
+
+        /* Mobile adjustment for No button position to be relative initially */
+        #btn-no.evading {
+            position: fixed;
+            /* Use fixed to move freely around the viewport */
+            z-index: 100;
+        }
+
+        /* CAPTIONS */
+        #caption-container {
+            margin-top: 1.5rem;
+            height: 24px;
+            font-style: italic;
+            font-size: 0.9rem;
+            color: #888;
+            transition: opacity 0.3s;
+        }
+
+        /* CELEBRATION STYLES */
+        .celebration-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .flower-reveal {
+            font-size: 5rem;
+            animation: bloom 1.5s ease-out forwards;
+        }
+
+        @keyframes bloom {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            80% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .message-card {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            font-size: 1rem;
+            line-height: 1.6;
+            text-align: left;
+            position: relative;
+            backdrop-filter: blur(5px);
+        }
+
+        .message-card::before {
+            content: "💌";
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2.5rem;
+        }
+
+        .meme-container {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 1rem;
+        }
+
+        .meme-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* DECORATIONS */
+        .bg-decoration {
+            position: fixed;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.4;
+            font-size: 2rem;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(10deg);
+            }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .message-card {
+                padding: 1.5rem;
+                font-size: 0.95rem;
+            }
+
+            button {
+                padding: 10px 24px;
+                font-size: 1rem;
+            }
+        }
+
+        /* Celebration Screen Override for Scrolling */
+        #celebration {
+            top: 0;
+            left: 0;
+            transform: none;
+            height: 100vh;
+            overflow-y: auto;
+            display: flex;
+            /* Centering content */
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            /* Ensure start from top */
+            padding-top: 50px;
+            padding-bottom: 50px;
+            z-index: 20;
+            /* Ensure on top */
+        }
+
+        #celebration .celebration-content {
+            /* No margin auto, just padding */
+            width: 100%;
+            max-width: 600px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- DECORATIONS -->
+    <div class="bg-decoration" style="top: 10%; left: 5%;">❤️</div>
+    <div class="bg-decoration" style="top: 20%; right: 10%; animation-delay: 1s;">🌸</div>
+    <div class="bg-decoration" style="bottom: 15%; left: 15%; animation-delay: 2s;">💕</div>
+    <div class="bg-decoration" style="bottom: 10%; right: 5%; animation-delay: 0.5s;">🌹</div>
+
+    <!-- LANDING SCREEN -->
+    <div id="landing" class="screen">
+        <h1>Will you be my Valentine? ❤️</h1>
+        <p class="subtext">No pressure… but choose wisely 😌</p>
+
+        <div class="buttons">
+            <button id="btn-yes">Yes 💘</button>
+            <button id="btn-no">No 🙃</button>
+        </div>
+
+        <div id="caption-container">
+            <!-- Dynamic captions appear here -->
+        </div>
+    </div>
+
+    <!-- CELEBRATION SCREEN -->
+    <div id="celebration" class="screen hidden">
+        <div class="celebration-content">
+            <div class="flower-reveal">💐</div>
+
+            <h1>Yay! You said Yes! 🎉</h1>
+
+            <div class="message-card">
+                <p>
+                    "You really said yes… and I’m smiling like a fool right now. 🥺❤️<br><br>
+                    I just want you to know that this isn’t just about Valentine’s Day or flowers or cute memes (okay,
+                    maybe a little 😅). It’s about me choosing you, and being happy that you chose me too.<br><br>
+                    You make things lighter, you make moments better, and honestly, I just enjoy you being you. Today is
+                    just an excuse, but I hope I get to keep choosing you even after the love season hype is
+                    gone.<br><br>
+                    So… thank you for saying yes. 🌹<br>
+                    Happy Valentine’s, my person. Now come let me spoil you properly 😌✨"
+                </p>
+            </div>
+
+            <div class="meme-container">
+                <!-- 
+                   REPLACE THIS URL WITH YOUR OWN GIF 
+                   Suggestions: Cute cat nod, excited dance, romantic scene
+                -->
+                <img src="https://media1.tenor.com/m/j8eIvs2Wdv4AAAAC/i-am-happy-mr-bean.gif" alt="Celebration GIF">
+            </div>
+        </div>
+    </div>
+
+    <!-- CONFETTI SCRIPT (Lightweight) -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnYes = document.getElementById('btn-yes');
+            const btnNo = document.getElementById('btn-no');
+            const landingScreen = document.getElementById('landing');
+            const celebrationScreen = document.getElementById('celebration');
+            const captionContainer = document.getElementById('caption-container');
+
+            // "No" button phrases
+            const noPhrases = [
+                "No 🙃",
+                "Are you sure?",
+                "Think again 😭",
+                "Don’t do me like that",
+                "Last chance 😔",
+                "Okay fine... but still no? 🥲",
+                "Really? 💔",
+                "I'm gonna cry...",
+                "You're breaking my heart",
+                "Please? 🥺"
+            ];
+
+            // Phrases to show below the buttons
+            const captions = [
+                "Wait, what? 👀",
+                "Are you clicking the right button?",
+                "I think your mouse slipped...",
+                "Not taking no for an answer!",
+                "Look at the other button! It's so nice!",
+                "Wow, playing hard to get?",
+            ];
+
+            let noClickCount = 0;
+
+            // --- NO BUTTON LOGIC ---
+
+            function moveNoButton() {
+                // Change text first so we calculate position based on new size
+                updateNoButtonText();
+                showRandomCaption();
+
+                // Determine viewport dimensions
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
+
+                // Button dimensions (after text update)
+                const btnWidth = btnNo.offsetWidth;
+                const btnHeight = btnNo.offsetHeight;
+
+                // Calculate random position
+                // Ensure it stays within safe padding (e.g., 50px from edges to be safe)
+                // Also ensure we don't go negative if the screen is too small
+                const padding = 50;
+
+                const minX = padding;
+                const maxX = viewportWidth - btnWidth - padding;
+                const minY = padding;
+                const maxY = viewportHeight - btnHeight - padding;
+
+                // If space is too small, just center it or keep at strict logical minimum
+                const safeMaxX = Math.max(minX, maxX);
+                const safeMaxY = Math.max(minY, maxY);
+
+                const randomX = Math.random() * (safeMaxX - minX) + minX;
+                const randomY = Math.random() * (safeMaxY - minY) + minY;
+
+                // Apply fixed positioning to move it freely
+                btnNo.classList.add('evading');
+                btnNo.style.left = `${randomX}px`;
+                btnNo.style.top = `${randomY}px`;
+            }
+
+            function updateNoButtonText() {
+                noClickCount++;
+                // Cycle through phrases or just pick random after a while
+                let phraseIndex = noClickCount % noPhrases.length;
+                btnNo.innerText = noPhrases[phraseIndex];
+
+                // Make the button look "sadder" or different (optional visual cue)
+                if (noClickCount > 2) {
+                    btnNo.style.backgroundColor = '#ffebee';
+                }
+            }
+
+            function showRandomCaption() {
+                const randomCaption = captions[Math.floor(Math.random() * captions.length)];
+                captionContainer.style.opacity = 0;
+                setTimeout(() => {
+                    captionContainer.innerText = randomCaption;
+                    captionContainer.style.opacity = 1;
+                }, 200);
+            }
+
+            // Events for "No" button
+            // Desktop: Mouseover to run away
+            btnNo.addEventListener('mouseover', moveNoButton);
+
+            // Mobile: Touchstart to run away (better than click for evasion)
+            btnNo.addEventListener('touchstart', (e) => {
+                e.preventDefault(); // Prevent default click
+                moveNoButton();
+            });
+
+            // Click fallback (if they somehow manage to click it)
+            btnNo.addEventListener('click', (e) => {
+                e.preventDefault();
+                moveNoButton();
+            });
+
+
+            // --- YES BUTTON LOGIC ---
+
+            btnYes.addEventListener('click', () => {
+                // Transitions
+                landingScreen.classList.add('hidden');
+
+                // Short timeout to allow fade out before fade in
+                setTimeout(() => {
+                    // Remove landing from flow if needed, but opacity check handles visibility
+                    landingScreen.style.display = 'none';
+                    celebrationScreen.classList.remove('hidden');
+
+                    // Trigger confetti
+                    triggerConfetti();
+                }, 500);
+            });
+
+            // --- CONFETTI ANIMATION ---
+            function triggerConfetti() {
+                const duration = 3 * 1000;
+                const animationEnd = Date.now() + duration;
+                const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+                const randomInRange = (min, max) => Math.random() * (max - min) + min;
+
+                const interval = setInterval(function () {
+                    const timeLeft = animationEnd - Date.now();
+
+                    if (timeLeft <= 0) {
+                        return clearInterval(interval);
+                    }
+
+                    const particleCount = 50 * (timeLeft / duration);
+
+                    // Simple confetti blasts
+                    confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+                    confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+                }, 250);
+            }
+
+        });
+    </script>
+</body>
+
+</html>
