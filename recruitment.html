@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rack Native | Cab to Cloud: Global Infrastructure Talent Solutions</title>
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050505;
+            --accent-orange: #ff6b00;
+            --accent-glow: rgba(255, 107, 0, 0.4);
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --nav-bg: rgba(10, 10, 10, 0.8);
+            --card-bg: rgba(20, 20, 20, 0.6);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --font-display: 'Orbitron', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        /* Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Layout Utilities */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .section-padding {
+            padding: 100px 0;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: var(--nav-bg);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px 0;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: var(--accent-orange);
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-orange);
+        }
+
+        .nav-socials {
+            display: flex;
+            gap: 15px;
+            font-size: 1.2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            padding-top: 100px;
+            /* Added spacing for fixed nav */
+            background-image:
+                linear-gradient(to bottom, rgba(5, 5, 5, 0.7), var(--bg-color)),
+                url('https://images.unsplash.com/photo-1558244661-9245184384ad?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-content {
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #fff 0%, var(--accent-orange) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255, 107, 0, 0.2);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto 40px;
+            font-weight: 300;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-orange);
+            color: #fff;
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        .btn-outline {
+            border-color: var(--border-color);
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #fff;
+        }
+
+        /* Section: Bridging the Gap */
+        .split-section {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .image-collage {
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .collage-img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            transition: 0.5s;
+        }
+
+        .collage-img:nth-child(2) {
+            transform: translateY(40px);
+        }
+
+        .split-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+
+        .split-content p {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .highlight-text {
+            color: var(--accent-orange);
+            font-weight: 700;
+        }
+
+        /* Section: Deliverables */
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 3rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--accent-orange);
+        }
+
+        .deliverables-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .deliverable-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 50px 30px;
+            border-radius: 12px;
+            text-align: center;
+            transition: 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .deliverable-card:hover {
+            border-color: var(--accent-orange);
+            transform: translateY(-10px);
+            background: rgba(30, 30, 30, 0.8);
+        }
+
+        .deliverable-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, var(--accent-glow) 0%, transparent 70%);
+            opacity: 0;
+            transition: 0.4s;
+            z-index: 0;
+        }
+
+        .deliverable-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .deliverable-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .deliverable-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Section: Why Us */
+        .tabs-container {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            min-height: 400px;
+            overflow: hidden;
+        }
+
+        .tabs-nav {
+            border-right: 1px solid var(--border-color);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .tab-btn {
+            padding: 24px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            text-align: left;
+            cursor: pointer;
+            font-family: var(--font-display);
+            transition: 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .tab-btn.active {
+            background: var(--accent-orange);
+            border-color: var(--accent-orange);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .tabs-content {
+            padding: 60px;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.5s forwards;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tab-pane h3 {
+            font-size: 2rem;
+            margin-bottom: 24px;
+            color: var(--accent-orange);
+        }
+
+        .tab-pane p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 80px 0 40px;
+            background: #000;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-about p {
+            margin-top: 20px;
+            color: var(--text-secondary);
+            max-width: 300px;
+        }
+
+        .footer-links h4 {
+            margin-bottom: 24px;
+            color: var(--accent-orange);
+        }
+
+        .footer-links a {
+            display: block;
+            margin-bottom: 12px;
+            color: var(--text-secondary);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .nav-links {
+                display: none;
+            }
+
+            .split-section {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs-container {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs-nav {
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section-padding {
+                padding: 60px 0;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="container">
+            <a href="#" class="logo">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    style="border-radius: 4px; box-shadow: 0 0 15px var(--accent-glow);">
+                    <rect width="40" height="40" fill="#ff6b00" />
+                    <path d="M10 10H30V30H10V10Z" fill="black" fill-opacity="0.2" />
+                    <path d="M15 15L25 25M25 15L15 25" stroke="white" stroke-width="3" stroke-linecap="round" />
+                </svg>
+                RACK <span>NATIVE</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#blog">Blog</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+            </ul>
+            <div class="nav-socials">
+                <a href="#">📱</a>
+                <a href="#">📘</a>
+                <a href="#">🐦</a>
+            </div>
+        </div>
+    </nav>
+
+    <header id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>CAB TO CLOUD:<br>GLOBAL INFRASTRUCTURE TALENT SOLUTIONS</h1>
+                <p>Rock Native is a specialist recruitment consultancy dedicated to the niche IT Cabling and
+                    Infrastructure sectors. From the humble RJ45 to complex Cloud Automation, we power the world's most
+                    critical data environments.</p>
+                <div class="cta-group">
+                    <button class="btn btn-primary">BUILD YOUR INFRASTRUCTURAL TEAM</button>
+                    <button class="btn btn-outline">POWER YOUR CAREER</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="about" class="section-padding">
+        <div class="container">
+            <div class="split-section">
+                <div class="image-collage">
+                    <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?auto=format&fit=crop&w=600&q=80"
+                        alt="Hardware" class="collage-img">
+                    <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=600&q=80"
+                        alt="Tech" class="collage-img">
+                </div>
+                <div class="split-content">
+                    <h2>Bridging the Gap Between Hardware and the <span class="highlight-text">Hyper-Scale</span></h2>
+                    <p>At Rock Native, we don’t just fill roles; we build the backbone of modern technology. We operate
+                        within the vital intersection of physical infrastructure and digital scale, providing a seamless
+                        “Cradle to Grave” recruitment lifecycle.</p>
+                    <p>Whether it’s a small-scale IT construction fit-out or a global Hyperscale Data Centre project, we
+                        engage across the entire spectrum of wired and backend infrastructure. Our mission is captured
+                        in our slogan: <span class="highlight-text">Cab to Cloud.</span></p>
+                    <button class="btn btn-outline">LEARN MORE</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="section-padding" style="background: rgba(255,107,0,0.02);">
+        <div class="container">
+            <div class="section-title">
+                <h2>What We Deliver</h2>
+            </div>
+            <div class="deliverables-grid">
+                <div class="deliverable-card">
+                    <div class="card-icon">🔌</div>
+                    <h3>IT Cabling</h3>
+                    <p>Precision talent for structured cabling and physical network foundations.</p>
+                </div>
+                <div class="deliverable-card">
+                    <div class="card-icon">⚡</div>
+                    <h3>Power</h3>
+                    <p>Critical electrical infrastructure experts to keep the world's data flowing.</p>
+                </div>
+                <div class="deliverable-card">
+                    <div class="card-icon">🗄️</div>
+                    <h3>Data Centres</h3>
+                    <p>End-to-end staffing for everything from local hubs to global Hyperscale facilities.</p>
+                </div>
+                <div class="deliverable-card">
+                    <div class="card-icon">☁️</div>
+                    <h3>Cloud</h3>
+                    <p>The "Back End" specialists driving automation, virtualization, and connectivity.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="why-us" class="section-padding">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Rack Native?</h2>
+            </div>
+            <div class="tabs-container">
+                <div class="tabs-nav">
+                    <button class="tab-btn active" onclick="showTab('lifecycle')">Full Lifecycle Engagement</button>
+                    <button class="tab-btn" onclick="showTab('expertise')">Niche Expertise</button>
+                    <button class="tab-btn" onclick="showTab('reach')">Global Reach</button>
+                </div>
+                <div class="tabs-content">
+                    <div id="lifecycle" class="tab-pane active">
+                        <h3>Complete Talent Roadmap</h3>
+                        <p>We understand the journey from the first cable pull to the final cloud integration. Our
+                            specialized focus means we know the technical requirements and the cultural fit needed for
+                            every stage of infrastructure development.</p>
+                    </div>
+                    <div id="expertise" class="tab-pane">
+                        <h3>Niche Industry Insights</h3>
+                        <p>We don't do generalist recruitment. Our team consists of industry veterans who speak your
+                            language, whether you're talking about Cat6a certifications or Kubernetes cluster
+                            management.</p>
+                    </div>
+                    <div id="reach" class="tab-pane">
+                        <h3>Connecting Borders</h3>
+                        <p>Our network spans across major global tech hubs. We help companies scale internationally by
+                            finding talent that understands both local regulations and global industry standards.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding"
+        style="text-align: center; background: linear-gradient( var(--bg-color), rgba(255,107,0,0.1));">
+        <div class="container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 30px;">Ready to Scale Your Infrastructure?</h2>
+            <p style="margin-bottom: 40px; color: var(--text-secondary);">Connect Your Lifecycle Today and build the
+                future of tech.</p>
+            <button class="btn btn-primary">GET IN TOUCH</button>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <a href="#" class="logo">
+                        <svg width="30" height="30" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"
+                            style="border-radius: 4px;">
+                            <rect width="40" height="40" fill="#ff6b00" />
+                            <path d="M10 10H30V30H10V10Z" fill="black" fill-opacity="0.2" />
+                            <path d="M15 15L25 25M25 15L15 25" stroke="white" stroke-width="3" stroke-linecap="round" />
+                        </svg>
+                        RACK <span>NATIVE</span>
+                    </a>
+                    <p>Specialist recruitment consultancy for the global IT infrastructure and data centre sectors.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Company</h4>
+                    <a href="#">About Us</a>
+                    <a href="#">Our Vision</a>
+                    <a href="#">Methodology</a>
+                    <a href="#">Careers</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Services</h4>
+                    <a href="#">Permanent Search</a>
+                    <a href="#">Contract Solutions</a>
+                    <a href="#">Executive Search</a>
+                    <a href="#">Site Fit-outs</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Legals</h4>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms & Conditions</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>Copyright © 2026 Rack Native | Powered by Modern Infrastructure Talent</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function showTab(tabId) {
+            // Remove active class from all buttons and panes
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+
+            // Add active class to clicked button and target pane
+            const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(btn => btn.innerText.toLowerCase().includes(tabId === 'lifecycle' ? 'lifecycle' : tabId === 'expertise' ? 'expertise' : 'reach'));
+
+            // Using more robust selector
+            const targetBtn = document.querySelector(`[onclick="showTab('${tabId}')"]`);
+            targetBtn.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
